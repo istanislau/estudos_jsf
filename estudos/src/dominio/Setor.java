@@ -1,28 +1,19 @@
 package dominio;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "setor")
-public class Setor implements Serializable{
-	
+public class Setor extends EntidadeDominio{
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6518914137539126187L;
 
-	@Id					//Informa que é chave primaria
-	@GeneratedValue(strategy=GenerationType.IDENTITY)	//informa que é uma sequencia gerada pelo banco
-	private Integer id;
-	
 	@Column
 	private String nome;
 	
@@ -31,17 +22,6 @@ public class Setor implements Serializable{
 	
 	@Column
 	private Boolean flgAtivo;
-	
-	@Column
-	private Date dtCadastro;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
@@ -67,11 +47,4 @@ public class Setor implements Serializable{
 		this.flgAtivo = flgAtivo;
 	}
 
-	public Date getDtCadastro() {
-		return dtCadastro;
-	}
-
-	public void setDtCadastro(Date dtCadastro) {
-		this.dtCadastro = dtCadastro;
-	}
 }

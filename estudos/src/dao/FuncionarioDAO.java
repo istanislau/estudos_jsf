@@ -1,26 +1,16 @@
 package dao;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
 
-import dominio.EntidadeDominio;
-import dominio.Setor;
+import dominio.Funcionario;
 
-public class SetorDAO extends AbstractDAO {
-	public Setor getSetor(String nome){
-		em.getTransaction().begin();
-		Setor setor = em.find(Setor.class, nome);
-		em.getTransaction().commit();
-		emf.close();
-		return setor;
-	}
-	
+public class FuncionarioDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
-	public List<Setor> Listar (){
-		List<Setor> resultado = new ArrayList<Setor>();
+	public List<Funcionario> Listar (){
+		List<Funcionario> resultado = new ArrayList<Funcionario>();
 		try{
 			//abrir conexão
 			em.getTransaction().begin();
