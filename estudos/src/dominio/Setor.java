@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "setor")
-public class Setor{
+public class Setor extends EntidadeDominio{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -1,8 +1,8 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
- 
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"> 
 <h:head>
  
  
@@ -13,7 +13,7 @@
                 <h:form id="formPrincipal"> 
                         <p:dataTable var="lista" value="#{setorBEAN.setores}"
                                 id="tabelaSetores" style="width:70%">
-                                <f:facet name="header">Lista de Pessoas Cadastradas</f:facet>
+                                <f:facet name="header">Lista de Setores Cadastradas</f:facet>
  
                                 <p:column headerText="Nome">
  
@@ -24,18 +24,36 @@
                                         <h:outputText value="#{lista.ramal}" />
                                 </p:column>
                                 <p:column headerText="Ações">
-                                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
-                                                oncomplete="dialogAlterar.show()" immediate="true">
+                                
+                                		<p:commandLink 
+                                			title="Alterar"
+                                			update=":formAlterar:Alterar"
+                                			actionListener="#{setorBEAN.setor}" 
+                                			oncomplete="dialogAlterar.show()"
+                                			immediate="true"
+                                			ajax="false"
+                                			value="#{lista}">
+									        <h:outputText value="Alterar" />
+									    </p:commandLink>
+                                
+                                        <!-- <p:commandLink title="Alterar" 
+                                        		update=":formAlterar:Alterar"
+                                        		actionListener="#{setorBEAN.setor}"
+                                                oncomplete="dialogAlterar.show()" 
+                                                immediate="true"
+                                                value="#{lista}">
                                                 <p:graphicImage value="./imagens/edit_icon.png" />
-                                                <f:setPropertyActionListener target="#{setorBEAN.setor}"
-                                                        value="#{lista}" />
+                                                
                                         </p:commandLink>
-                                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
-                                                oncomplete="confirmation.show()" immediate="true">
+                                        <p:commandLink title="Excluir" 
+                                        		update=":formExcluir:Excluir"
+                                                oncomplete="confirmation.show()" 
+                                                immediate="true"
+                                                actionListener="#{setorBEAN.setor}"
+                                                value="#{lista}">
                                                 <p:graphicImage value="./imagens/del_icon.png" />
-                                                <f:setPropertyActionListener target="#{setorBEAN.setor}"
-                                                        value="#{lista}" />
-                                        </p:commandLink>
+                                                
+                                        </p:commandLink>-->
                                 </p:column>
  
                         </p:dataTable>
@@ -49,9 +67,11 @@
                         id="Alterar">
                         <p:panelGrid id="panelAlterar" columns="2">
                                 <h:outputText value="Nome:" />
-                                <p:inputText value="#{setorBEAN.setor().nome}" />
+                                <p:inputText value="#{setorBEAN.setor.nome}" />
                                 <h:outputText value="Ramal:" />
-                                <p:inputText value="#{setorBEAN.setor().ramal}" />                           
+                                <p:inputText value="#{setorBEAN.setor.ramal}" /> 
+								<h:outputText value="Ativo: " />
+								<p:inputSwitch value="#{setorBEAN.setor.flgAtivo}" />                         
                         </p:panelGrid>
                         <p:commandButton value="Alterar"
                                 actionListener="#{pessoaBean.alterar}"
@@ -64,9 +84,9 @@
                 <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
                         <p:panelGrid id="panelCadastrar" columns="2">
                                 <h:outputText value="Nome:" />
-                                <p:inputText value="#{setorBEAN.setor().nome}" />
+                                <p:inputText value="#{setorBEAN.setor.nome}" />
                                 <h:outputText value="Endereco:" />
-                                <p:inputText value="#{setorBEAN.setor().ramal}" />
+                                <p:inputText value="#{setorBEAN.setor.ramal}" />
                         </p:panelGrid>
                         <p:commandButton value="Cadastrar"
                                 actionListener="#{setorBEAN.cadastrar()}"
@@ -76,7 +96,7 @@
         </h:form>
         <h:form id="formExcluir">
                 <p:confirmDialog id="Excluir"
-                        message="Você gostaria de Deletar o #{setorBEAN.setor().nome}?"
+                        message="Você gostaria de Deletar o #{setorBEAN.setor.nome}?"
                         header="Excluir" severity="alert" widgetVar="confirmation">
  
                         <p:commandButton id="confirm" value="Sim"

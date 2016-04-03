@@ -11,9 +11,9 @@ import dominio.Setor;
 
 @ManagedBean(name = "setorBEAN")
 public class SetorBEAN {
-	Setor setor = new Setor();
+	Setor setor;
 	 
-	List setores = new ArrayList(); 
+	List <Setor> setores = new ArrayList(); 
  
 	//construtor
 	public SetorBEAN(){
@@ -40,19 +40,19 @@ public class SetorBEAN {
 	}
  
 	//getters and setters
-	public Setor setor() {
+	public Setor getSetor() {
 		return setor;
 	}
  
-	public void setPessoa(Setor pessoa) {
+	public void setSetor(Setor pessoa) {
 		this.setor = pessoa;
 	}
  
-	public List getPessoas() {
+	public List getSetores() {
 		return setores;
 	}
  
-	public void setPessoas(List pessoas) {
+	public void setSetores(List pessoas) {
 		this.setores = pessoas;
 	}
 }
