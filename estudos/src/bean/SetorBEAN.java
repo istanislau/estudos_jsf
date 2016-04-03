@@ -4,12 +4,12 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 
 import dao.SetorDAO;
 import dominio.Setor;
 
-@ManagedBean
+@ManagedBean(name = "setorBEAN")
 public class SetorBEAN {
 	Setor setor = new Setor();
 	 
@@ -40,7 +40,7 @@ public class SetorBEAN {
 	}
  
 	//getters and setters
-	public Setor getPessoa() {
+	public Setor setor() {
 		return setor;
 	}
  
