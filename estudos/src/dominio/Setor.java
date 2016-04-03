@@ -1,18 +1,24 @@
 package dominio;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "setor")
-public class Setor extends EntidadeDominio{
-
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6518914137539126187L;
+public class Setor{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer id;
+	
+	@Column
+	private Date dtCadastro;
 
 	@Column
 	private String nome;
@@ -22,6 +28,22 @@ public class Setor extends EntidadeDominio{
 	
 	@Column
 	private Boolean flgAtivo;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getDtCadastro() {
+		return dtCadastro;
+	}
+
+	public void setDtCadastro(Date dtCadastro) {
+		this.dtCadastro = dtCadastro;
+	}
 
 	public String getNome() {
 		return nome;
@@ -46,5 +68,6 @@ public class Setor extends EntidadeDominio{
 	public void setFlgAtivo(Boolean flgAtivo) {
 		this.flgAtivo = flgAtivo;
 	}
+
 
 }

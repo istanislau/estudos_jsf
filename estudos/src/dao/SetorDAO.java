@@ -1,43 +1,68 @@
 package dao;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
+import org.hibernate.Criteria;
+import org.hibernate.classic.Session;
 
-import dominio.EntidadeDominio;
 import dominio.Setor;
+import util.HibernateUtil;
 
-public class SetorDAO extends AbstractDAO {
-	public Setor getSetor(String nome){
-		em.getTransaction().begin();
-		Setor setor = em.find(Setor.class, nome);
-		em.getTransaction().commit();
-		emf.close();
-		return setor;
+public class SetorDAO{
+	private Session sessao; 
+	 
+	public void salvar(Setor obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			sessao.beginTransaction();
+			sessao.save(obj);
+			sessao.getTransaction().commit();
+
+		}finally{
+			sessao.close();
+
+		}
+	}
+
+	public void alterar(Setor obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			sessao = HibernateUtil.getSessionFactory().openSession();
+			sessao.beginTransaction();
+			sessao.saveOrUpdate(obj);
+			sessao.getTransaction().commit();
+		}finally{
+			sessao.close();
+
+		}
+	}
+
+	public void excluir(Setor obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			sessao = HibernateUtil.getSessionFactory().openSession();
+			sessao.beginTransaction();
+			sessao.delete(obj);
+			sessao.getTransaction().commit();
+
+		}finally{
+			sessao.close();
+
+		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Setor> Listar (){
-		List<Setor> resultado = new ArrayList<Setor>();
+	public List  listar(){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
 		try{
-			//abrir conexão
-			em.getTransaction().begin();
-			
-			Query consulta = em.createQuery("select setore from Setor setor");
-			
-			resultado = consulta.getResultList();
-			
-			//commit
-			em.getTransaction().commit();
-		}catch(RuntimeException e){
-			//rollback em caso de erro
-			em.getTransaction().rollback();
-		}finally {
-			//fechar conexão
-			emf.close();
+			Criteria cri = sessao.createCriteria(Setor.class);
+			return cri.list();
+		}finally{
+			sessao.close();
 		}
-		return resultado;
 	}
 }

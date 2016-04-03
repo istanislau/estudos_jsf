@@ -1,33 +1,67 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
+import org.hibernate.Criteria;
+import org.hibernate.classic.Session;
 
 import dominio.Funcionario;
+import util.HibernateUtil;
 
-public class FuncionarioDAO extends AbstractDAO {
-	@SuppressWarnings("unchecked")
-	public List<Funcionario> Listar (){
-		List<Funcionario> resultado = new ArrayList<Funcionario>();
+public class FuncionarioDAO  {
+	private Session sessao; 
+	 
+	public void salvar(Funcionario obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
 		try{
-			//abrir conexão
-			em.getTransaction().begin();
-			
-			Query consulta = em.createQuery("select setore from Setor setor");
-			
-			resultado = consulta.getResultList();
-			
-			//commit
-			em.getTransaction().commit();
-		}catch(RuntimeException e){
-			//rollback em caso de erro
-			em.getTransaction().rollback();
-		}finally {
-			//fechar conexão
-			emf.close();
+			sessao.beginTransaction();
+			sessao.save(obj);
+			sessao.getTransaction().commit();
+
+		}finally{
+			sessao.close();
+
 		}
-		return resultado;
+	}
+
+	public void alterar(Funcionario obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			sessao = HibernateUtil.getSessionFactory().openSession();
+			sessao.beginTransaction();
+			sessao.saveOrUpdate(obj);
+			sessao.getTransaction().commit();
+		}finally{
+			sessao.close();
+
+		}
+	}
+
+	public void excluir(Funcionario obj){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			sessao = HibernateUtil.getSessionFactory().openSession();
+			sessao.beginTransaction();
+			sessao.delete(obj);
+			sessao.getTransaction().commit();
+
+		}finally{
+			sessao.close();
+
+		}
+	}
+	
+	public List  listar(){
+		sessao = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			Criteria cri = sessao.createCriteria(Funcionario.class);
+			return cri.list();
+		}finally{
+			sessao.close();
+		}
 	}
 }

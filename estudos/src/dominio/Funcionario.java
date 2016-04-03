@@ -1,27 +1,50 @@
 package dominio;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "funcionario")
-public class Funcionario extends EntidadeDominio {
+public class Funcionario{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9087797444414963879L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer id;
+	
+	@Column
+	private Date dtCadastro;
 	
 	@Column
 	private String nome;
 	
 	@ManyToOne (fetch = FetchType.EAGER)
-	@JoinColumn (name = "id_setor")
+	@JoinColumn (name = "id")
 	private Setor setor;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getDtCadastro() {
+		return dtCadastro;
+	}
+
+	public void setDtCadastro(Date dtCadastro) {
+		this.dtCadastro = dtCadastro;
+	}
 
 	public String getNome() {
 		return nome;
@@ -39,7 +62,5 @@ public class Funcionario extends EntidadeDominio {
 		this.setor = setor;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 }
