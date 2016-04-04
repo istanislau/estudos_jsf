@@ -4,26 +4,19 @@ import java.util.Date;
 
 import core.IStrategy;
 import dominio.EntidadeDominio;
-import dominio.Setor;
 
 public class ComplementarDtCadastro implements IStrategy {
 
-	public String processar(Setor setor) {		
+	@SuppressWarnings("null")
+	@Override
+	public String processar(EntidadeDominio entidade) {				
 		
-		
-		if(setor !=null){
-			Date data = new Date();	
-			setor.setDtCadastro(data);
+		if(entidade !=null){
+			Date data = new Date();		
+			entidade.setDtCadastro(data);
 		}else{
-			return "Entidade: "+ setor.getClass().getCanonicalName()+" nula!";
+			return "Entidade: "+ entidade.getClass().getCanonicalName()+" nula!";
 		}
 		return null;
 	}
-
-	@Override
-	public String processar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

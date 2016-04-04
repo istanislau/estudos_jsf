@@ -1,28 +1,25 @@
 package impl.controle;
 
-import impl.dao.AutorDAO;
-import impl.dao.EditoraDAO;
-import impl.dao.EnderecoDAO;
-import impl.dao.TelefoneDAO;
-import impl.negocio.ComplementarDtCadastro;
-import impl.negocio.DadosObrigatoriosAutor;
-import impl.negocio.DadosObrigatoriosEditora;
-import impl.negocio.ValidarCNPJ;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dominio.Autor;
-import dominio.Editora;
-import dominio.Endereco;
-import core.IDAO;
+import aplicacao.Resultado;
 import core.IFachada;
 import core.IStrategy;
-import aplicacao.Resultado;
-
+import dao.FuncionarioDAO;
+import dao.IDAO;
+import dao.MaquinaDAO;
+import dao.SetorDAO;
 import dominio.EntidadeDominio;
+import dominio.Funcionario;
+import dominio.Maquina;
+import dominio.Setor;
+import impl.negocio.ComplementarDtCadastro;
+import impl.negocio.DadosObrigatoriosSetor;
 
 public class Fachada implements IFachada {
 
@@ -49,41 +46,38 @@ public class Fachada implements IFachada {
 		rns = new HashMap<String, Map<String, List<IStrategy>>>();
 		
 		// Criando instâncias dos DAOs a serem utilizados
-		AutorDAO autorDAO = new AutorDAO();
-		EditoraDAO editoraDAO = new EditoraDAO();
-		TelefoneDAO telefoneDAO = new TelefoneDAO();
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
+		SetorDAO setorDAO = new SetorDAO();
+		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+		MaquinaDAO maquinaDAO = new MaquinaDAO();
 		
 		 
 		// Adicionando cada dao no MAP indexando pelo nome da classe
-		daos.put(Autor.class.getName(), autorDAO);
-		daos.put(Autor.class.getName(), editoraDAO);
-		daos.put(Autor.class.getName(), telefoneDAO);
-		daos.put(Autor.class.getName(), enderecoDAO);
+		daos.put(Setor.class.getName(), setorDAO);
+		daos.put(Funcionario.class.getName(), funcionarioDAO);
+		daos.put(Maquina.class.getName(), maquinaDAO);
 		
 		
 		// Criando instâncias de regras de negócio a serem utilizados		
-		DadosObrigatoriosAutor rnDadosObrigatoriosAutor = new DadosObrigatoriosAutor();
-		DadosObrigatoriosEditora rnDadosObrigatoriosEditora = new DadosObrigatoriosEditora();
-		ValidarCNPJ rnValidarCNPJ = new ValidarCNPJ();
+		DadosObrigatoriosSetor rnDadosObrigatoriosSetor = new DadosObrigatoriosSetor();
 		ComplementarDtCadastro rnComplementarDtCadastro = new ComplementarDtCadastro();
 		
-		//--------------------------------------------- Regras de negocio Autor ---------------------------------------------
+		//--------------------------------------------- Regras de negocio Setor ---------------------------------------------
 		// Cria lista de regras de negocios especificas por operação
-		List<IStrategy> rnsSalvarAutor = new ArrayList<IStrategy>();
-		List<IStrategy> rnsAlterarAutor = new ArrayList<IStrategy>();
-		List<IStrategy> rnsConsultarAutor = new ArrayList<IStrategy>();
-		List<IStrategy> rnsExcluirAutor = new ArrayList<IStrategy>();
+		List<IStrategy> rnsSalvarSetor = new ArrayList<IStrategy>();
+		List<IStrategy> rnsAlterarSetor = new ArrayList<IStrategy>();
+		List<IStrategy> rnsListarSetor = new ArrayList<IStrategy>();
+		List<IStrategy> rnsExcluirSetor = new ArrayList<IStrategy>();
 		
 		/* Lista com as regras de negocio de autor
 		 * Operação: Salvar 
 		 */		
-		rnsSalvarAutor.add(rnDadosObrigatoriosAutor);
-		rnsSalvarAutor.add(rnComplementarDtCadastro);
+		rnsSalvarSetor.add(rnDadosObrigatoriosSetor);
+		rnsSalvarSetor.add(rnComplementarDtCadastro);
 		
 		/* Lista com as regras de negocio de autor
 		 * Operação: Alterar 
 		 */	
+		rnsAlterarSetor.add(rnDadosObrigatoriosSetor);
 		
 		/* Lista com as regras de negocio de autor
 		 * Operação: Consultar 
@@ -94,52 +88,18 @@ public class Fachada implements IFachada {
 		 */	
 		
 		// Cria mapa com lista de regras de negocios especificas por operação de autor
-		Map<String, List<IStrategy>> rnsAutor = new HashMap<String, List<IStrategy>>();
-		rnsAutor.put("SALVAR", rnsSalvarAutor);
-		rnsAutor.put("ALTERAR", rnsAlterarAutor);
-		rnsAutor.put("CONSULTAR", rnsConsultarAutor);
-		rnsAutor.put("EXCLUIR", rnsExcluirAutor);
+		Map<String, List<IStrategy>> rnsSetor = new HashMap<String, List<IStrategy>>();
+		rnsSetor.put("SALVAR", rnsSalvarSetor);
+		rnsSetor.put("ALTERAR", rnsAlterarSetor);
+		rnsSetor.put("CONSULTAR", rnsListarSetor);
+		rnsSetor.put("EXCLUIR", rnsExcluirSetor);
 		//--------------------------------------------- FIM Regras de negocio Autor ---------------------------------------------
 		
 		
-		//--------------------------------------------- Regras de negocio Editora ---------------------------------------------
-		// Cria lista de regras de negocios especificas por operação
-		List<IStrategy> rnsSalvarEditora = new ArrayList<IStrategy>();
-		List<IStrategy> rnsAlterarEditora = new ArrayList<IStrategy>();
-		List<IStrategy> rnsConsultarEditora = new ArrayList<IStrategy>();
-		List<IStrategy> rnsExcluirEditora = new ArrayList<IStrategy>();
-		
-		/* Lista com as regras de negocio de editora
-		 * Operação: Salvar 
-		 */
-		rnsSalvarEditora.add(rnDadosObrigatoriosEditora);
-		rnsSalvarEditora.add(rnValidarCNPJ);
-		rnsSalvarEditora.add(rnComplementarDtCadastro);
-		
-		/* Lista com as regras de negocio de editora
-		 * Operação: Alterar 
-		 */
-		
-		/* Lista com as regras de negocio de editora
-		 * Operação: Consultar 
-		 */
-		
-		/* Lista com as regras de negocio de editora
-		 * Operação: Excluir 
-		 */
-		
-		// Cria mapa com lista de regras de negocios especificas por operação de autor
-		Map<String, List<IStrategy>> rnsEditora = new HashMap<String, List<IStrategy>>();
-		rnsEditora.put("SALVAR", rnsSalvarEditora);
-		rnsEditora.put("ALTERAR", rnsAlterarEditora);
-		rnsEditora.put("CONSULTAR", rnsConsultarEditora);
-		rnsEditora.put("EXCLUIR", rnsExcluirEditora);
-		//--------------------------------------------- FIM Regras de negocio Editora ---------------------------------------------
-		
+			
 		
 		//--------------------------------------------- Indexação no mapa geral ---------------------------------------------
-		rns.put(Autor.class.getName(), rnsAutor);
-		rns.put(Editora.class.getName(), rnsEditora);
+		rns.put(Setor.class.getName(), rnsSetor);
 		
 	}
 	
@@ -147,6 +107,8 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado salvar(EntidadeDominio entidade) {
 		resultado = new Resultado();
+		
+		//Reserva o nome da classe para pesquisar no map
 		String nmClasse = entidade.getClass().getName();	
 		
 		String msg = executarRegras(entidade, "SALVAR");
@@ -154,15 +116,10 @@ public class Fachada implements IFachada {
 		
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
-			try {
-				dao.salvar(entidade);
-				List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-				entidades.add(entidade);
-				resultado.setEntidades(entidades);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Não foi possível realizar o registro!");				
-			}
+			dao.salvar(entidade);
+			List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+			entidades.add(entidade);
+			resultado.setEntidades(entidades);
 		}else{
 			resultado.setMsg(msg);						
 		}
@@ -179,15 +136,10 @@ public class Fachada implements IFachada {
 	
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
-			try {
-				dao.alterar(entidade);
-				List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-				entidades.add(entidade);
-				resultado.setEntidades(entidades);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Não foi possível realizar o registro!");				
-			}
+			dao.alterar(entidade);
+			List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+			entidades.add(entidade);
+			resultado.setEntidades(entidades);
 		}else{
 			resultado.setMsg(msg);					
 		}		
@@ -204,22 +156,17 @@ public class Fachada implements IFachada {
 		
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
-			try {
-				dao.excluir(entidade);
-				List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-				entidades.add(entidade);
-				resultado.setEntidades(entidades);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Não foi possível realizar o registro!");
-				
-			}
+			dao.excluir(entidade);
+			List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+			entidades.add(entidade);
+			resultado.setEntidades(entidades);
 		}else{
 			resultado.setMsg(msg);
 		}
 		return resultado;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Resultado consultar(EntidadeDominio entidade) {
 		resultado = new Resultado();
@@ -230,12 +177,7 @@ public class Fachada implements IFachada {
 		
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
-			try {
-				resultado.setEntidades(dao.consultar(entidade));
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Não foi possível realizar a consulta!");
-			}
+			resultado.setEntidades(dao.listar());
 		}else{
 			resultado.setMsg(msg);
 		}

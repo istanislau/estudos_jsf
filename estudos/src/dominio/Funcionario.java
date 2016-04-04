@@ -14,15 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "funcionario")
-public class Funcionario{
+public class Funcionario extends EntidadeDominio{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer id;
-	
-	@Column
-	private Date dtCadastro;
-	
 	@Column
 	private String nome;
 	
@@ -30,21 +23,6 @@ public class Funcionario{
 	@JoinColumn (name = "id")
 	private Setor setor;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Date getDtCadastro() {
-		return dtCadastro;
-	}
-
-	public void setDtCadastro(Date dtCadastro) {
-		this.dtCadastro = dtCadastro;
-	}
 
 	public String getNome() {
 		return nome;

@@ -13,13 +13,6 @@ import javax.persistence.Table;
 @Table(name = "setor")
 public class Setor extends EntidadeDominio{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer id;
-	
-	@Column
-	private Date dtCadastro;
-
 	@Column
 	private String nome;
 	
@@ -28,22 +21,6 @@ public class Setor extends EntidadeDominio{
 	
 	@Column
 	private Boolean flgAtivo;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Date getDtCadastro() {
-		return dtCadastro;
-	}
-
-	public void setDtCadastro(Date dtCadastro) {
-		this.dtCadastro = dtCadastro;
-	}
 
 	public String getNome() {
 		return nome;
@@ -68,6 +45,4 @@ public class Setor extends EntidadeDominio{
 	public void setFlgAtivo(Boolean flgAtivo) {
 		this.flgAtivo = flgAtivo;
 	}
-
-
 }

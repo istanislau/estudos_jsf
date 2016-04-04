@@ -3,56 +3,15 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import dominio.Funcionario;
 import util.HibernateUtil;
+import dao.AbstractDAO;
 
-public class FuncionarioDAO  {
-	private Session sessao; 
-	 
-	public void salvar(Funcionario obj){
-		sessao = HibernateUtil.getSessionFactory().openSession();
+public class FuncionarioDAO extends AbstractDAO{
 
-		try{
-			sessao.beginTransaction();
-			sessao.save(obj);
-			sessao.getTransaction().commit();
-
-		}finally{
-			sessao.close();
-
-		}
-	}
-
-	public void alterar(Funcionario obj){
-		sessao = HibernateUtil.getSessionFactory().openSession();
-
-		try{
-			sessao = HibernateUtil.getSessionFactory().openSession();
-			sessao.beginTransaction();
-			sessao.saveOrUpdate(obj);
-			sessao.getTransaction().commit();
-		}finally{
-			sessao.close();
-
-		}
-	}
-
-	public void excluir(Funcionario obj){
-		sessao = HibernateUtil.getSessionFactory().openSession();
-
-		try{
-			sessao = HibernateUtil.getSessionFactory().openSession();
-			sessao.beginTransaction();
-			sessao.delete(obj);
-			sessao.getTransaction().commit();
-
-		}finally{
-			sessao.close();
-
-		}
-	}
+	private Session sessao;
 	
 	public List  listar(){
 		sessao = HibernateUtil.getSessionFactory().openSession();

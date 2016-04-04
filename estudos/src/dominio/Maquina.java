@@ -14,14 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "maquina")
-public class Maquina{
+public class Maquina extends EntidadeDominio{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer id;
-	
-	@Column
-	private Date dtCadastro;
 	@Column
 	private String patrimonio;
 	
